@@ -4,6 +4,11 @@ import Profile from "../../utils/icon/Profile";
 
 const meta: Meta<typeof Button> = {
   title: "Button",
+  parameters: {
+    backgrounds: {
+      default: "dark"
+    }
+  },
   component: Button
 };
 
