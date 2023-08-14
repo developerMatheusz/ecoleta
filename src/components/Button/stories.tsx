@@ -15,14 +15,16 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
+export const WithIcon: Story = {
   args: {
     size: "medium",
     bg: "white",
     fullWidth: false,
     minimal: false,
     icon: <Profile />,
-    text: "Entrar"
+    text: "Entrar",
+    disabled: false,
+    loading: false
   },
   argTypes: {
     icon: {
@@ -30,7 +32,29 @@ export const Primary: Story = {
     }
   },
   render: (args) => (
-    <div className="w-44">
+    <div className="w-56">
+      <Button {...args} />
+    </div>
+  )
+};
+
+export const Default: Story = {
+  args: {
+    size: "medium",
+    bg: "white",
+    fullWidth: false,
+    minimal: false,
+    text: "Entrar",
+    disabled: false,
+    loading: false
+  },
+  argTypes: {
+    icon: {
+      type: "symbol"
+    }
+  },
+  render: (args) => (
+    <div className="w-56">
       <Button {...args} />
     </div>
   )
