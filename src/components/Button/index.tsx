@@ -1,11 +1,16 @@
 import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
+import classNames from "classnames";
+import { getButtonInfo } from "../../utils/methods/getComponentInfo";
+import Spinner from "../Spinner";
 
 type ButtonTypes =
   | AnchorHTMLAttributes<HTMLAnchorElement>
   | ButtonHTMLAttributes<HTMLButtonElement>;
 
+export type ButtonSize = "small" | "medium" | "large";
+
 export type ButtonProps = {
-  size?: "small" | "medium" | "large";
+  size?: ButtonSize;
   bg?: "blue" | "white";
   fullWidth?: boolean;
   minimal?: boolean;
@@ -25,48 +30,28 @@ const Button = ({
   disabled = false,
   loading = false
 }: ButtonProps) => {
-  let sizeButton = "";
-
-  switch (size) {
-    case "small":
-      sizeButton = `${
-        minimal ? "p-2" : `${loading ? "p-2" : "py-1 px-2"}`
-      } text-sm`;
-      break;
-    case "large":
-      sizeButton = `${
-        minimal ? "p-4" : `${loading ? "p-4" : "py-4 px-6"}`
-      } text-xl`;
-      break;
-    default:
-      sizeButton = `${
-        minimal ? "p-3" : `${loading ? "p-3" : "py-2 px-4"}`
-      } text-lg`;
-  }
+  const buttonClass = getButtonInfo({
+    loading,
+    bg,
+    size,
+    fullWidth,
+    disabled,
+    minimal
+  });
 
   return (
-    <button
-      className={`flex items-center justify-center rounded-full ${
-        !loading && "hover:opacity-75"
-      } ${
-        bg === "white" ? "bg-white text-[#1351B4]" : "bg-[#1351B4] text-white"
-      } ${sizeButton} ${fullWidth && "w-full"} ${
-        disabled ? "opacity-50 cursor-not-allowed" : ""
-      }`}
-      disabled={disabled}
-    >
+    <button className={buttonClass} disabled={disabled}>
       {loading ? (
-        <div
-          className={`inline-block w-5 h-5 animate-spin rounded-full border-2 border-solid ${
-            bg === "white" ? "border-[#1351B4]" : "border-white"
-          } border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]`}
-          role="status"
-        />
+        <Spinner bg={bg} />
       ) : (
         <>
           {icon && <div className="w-5 h-5">{icon}</div>}
           <span
-            className={`font-bold ${icon && "ml-2"} ${minimal && "hidden"}`}
+            className={classNames(
+              "font-bold",
+              icon && "ml-2",
+              minimal && "hidden"
+            )}
           >
             {text}
           </span>

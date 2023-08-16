@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Input from ".";
-import Profile from "../../utils/icon/Profile";
+import TextField from ".";
+import Profile from "../../utils/icons/Profile";
 
-const meta: Meta<typeof Input> = {
-  title: "Input",
+const meta: Meta<typeof TextField> = {
+  title: "TextField",
   parameters: {
     backgrounds: {
       default: "light"
     }
   },
-  component: Input
+  component: TextField
 };
 
 export default meta;
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<typeof TextField>;
 
 export const Default: Story = {
   args: {
@@ -25,9 +25,14 @@ export const Default: Story = {
     type: "text",
     icon: <Profile />
   },
+  argTypes: {
+    icon: {
+      type: "symbol"
+    }
+  },
   render: (args) => (
     <div className="w-80">
-      <Input {...args} />
+      <TextField {...args} />
     </div>
   )
 };
@@ -43,9 +48,14 @@ export const WithMessage: Story = {
     type: "text",
     icon: <Profile />
   },
+  argTypes: {
+    icon: {
+      type: "symbol"
+    }
+  },
   render: (args) => (
     <div className="w-80">
-      <Input {...args} />
+      <TextField {...args} />
     </div>
   )
 };
@@ -61,9 +71,14 @@ export const WithInitialValue: Story = {
     type: "text",
     icon: <Profile />
   },
+  argTypes: {
+    icon: {
+      type: "symbol"
+    }
+  },
   render: (args) => (
     <div className="w-80">
-      <Input {...args} />
+      <TextField {...args} />
     </div>
   )
 };

@@ -1,32 +1,8 @@
+import { getTooltipInfo } from "../../utils/methods/getComponentInfo";
 import { MessageProps } from "../Message";
 
 const Tooltip = ({ typeMessage }: MessageProps) => {
-  let typeMessageFeedback = "";
-  let title = "";
-  let subtitle = "";
-
-  switch (typeMessage) {
-    case "warning":
-      typeMessageFeedback = "bg-amber-400 text-black";
-      title = "Título amarelo";
-      subtitle = "Subtítulo amarelo";
-      break;
-    case "error":
-      typeMessageFeedback = "bg-red-600 text-white";
-      title = "Título vermelho";
-      subtitle = "Subtítulo vermelho";
-      break;
-    case "info":
-      typeMessageFeedback = "bg-[#1351B4] text-white";
-      title = "Título azul";
-      subtitle = "Subtítulo azul";
-      break;
-    default:
-      typeMessageFeedback = "bg-green-600 text-white";
-      title = "Título verde";
-      subtitle = "Subtítulo verde";
-      break;
-  }
+  const { typeMessageFeedback, title, subtitle } = getTooltipInfo(typeMessage);
 
   return (
     <div className="relative inline-block">

@@ -1,6 +1,7 @@
 import { TextareaHTMLAttributes, useState } from "react";
 import { MessageProps } from "../Message";
-import TagMessage from "../TagMessage";
+import { getTextAreaInfo } from "../../utils/methods/getComponentInfo";
+import Label from "../Label";
 
 type TextAreaProps = {
   onTextareaChange?: (value: string) => void;
@@ -20,32 +21,9 @@ const TextArea = ({
   typeMessage
 }: TextAreaProps) => {
   const [value, setValue] = useState(initialValue);
-  let tagMessage = null;
-  let colorMessage = "";
 
-  switch (typeMessage) {
-    case "warning":
-      tagMessage = <TagMessage typeMessage="warning" />;
-      colorMessage = "border-amber-400";
-      disabled = true;
-      break;
-    case "error":
-      tagMessage = <TagMessage typeMessage="error" />;
-      colorMessage = "border-red-600";
-      break;
-    case "info":
-      tagMessage = <TagMessage typeMessage="info" />;
-      colorMessage = "border-blue-600";
-      break;
-    case "success":
-      tagMessage = <TagMessage typeMessage="success" />;
-      colorMessage = "border-green-600";
-      break;
-    default:
-      tagMessage = "";
-      colorMessage = "border-gray-400";
-      break;
-  }
+  const { tagMessage, colorMessage, disableTextarea } =
+    getTextAreaInfo(typeMessage);
 
   const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = event.currentTarget.value;
@@ -57,20 +35,17 @@ const TextArea = ({
   return (
     <div className="flex flex-col">
       {!!label && (
-        <label
-          htmlFor={name}
-          className={`text-lg ${disabled && "opacity-50 cursor-not-allowed"}`}
-        >
+        <Label name={name} disabled={disabled || disableTextarea}>
           {label}
-        </label>
+        </Label>
       )}
       <textarea
         onChange={onChange}
         value={value}
-        disabled={disabled}
+        disabled={disabled || disableTextarea}
         {...(label ? { id: name } : {})}
         className={`italic-placeholder rounded text-base text-black p-2 focus:outline-none resize-none h-32 border border-1 ${colorMessage} ${
-          disabled && "opacity-50 cursor-not-allowed"
+          (disabled || disableTextarea) && "opacity-50 cursor-not-allowed"
         }`}
         placeholder={placeholder}
       />
