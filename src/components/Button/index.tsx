@@ -18,6 +18,7 @@ export type ButtonProps = {
   disabled?: boolean;
   loading?: boolean;
   onlyBorder?: boolean;
+  toggleMenu?: () => void;
 } & ButtonTypes;
 
 const Button = ({
@@ -29,7 +30,8 @@ const Button = ({
   text,
   disabled = false,
   loading = false,
-  onlyBorder
+  onlyBorder,
+  toggleMenu
 }: ButtonProps) => {
   return (
     <S.Button
@@ -40,6 +42,7 @@ const Button = ({
       size={size}
       bg={bg}
       minimal={minimal}
+      onClick={toggleMenu}
     >
       {loading ? (
         <Spinner bg={bg} />
