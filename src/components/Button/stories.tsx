@@ -24,7 +24,8 @@ export const WithIcon: Story = {
     icon: <Profile />,
     text: "Entrar",
     disabled: false,
-    loading: false
+    loading: false,
+    onlyBorder: false
   },
   argTypes: {
     icon: {
@@ -46,7 +47,8 @@ export const Default: Story = {
     minimal: false,
     text: "Entrar",
     disabled: false,
-    loading: false
+    loading: false,
+    onlyBorder: false
   },
   argTypes: {
     icon: {

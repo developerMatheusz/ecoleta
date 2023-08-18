@@ -3,13 +3,14 @@ import { MessageProps } from "../Message";
 import Label from "../Label";
 import MenuHead from "../MenuHead";
 import ItemMenu from "../ItemMenu";
+import * as S from "./styles";
 
 export type Option = {
   value: string;
   label: string;
 };
 
-type SelectProps = {
+export type SelectProps = {
   onInputChange?: (value: string | string[]) => void;
   disabled?: boolean;
   options: Option[];
@@ -61,22 +62,14 @@ const SelectItem = ({
   };
 
   return (
-    <div className="flex flex-col">
-      <div>
-        <Label
-          label="Label"
-          disabled={
-            disabled || typeMessageFeedback === "border-amber-500"
-              ? true
-              : false
-          }
-        />
-      </div>
-      <div
-        className={`flex flex-col justify-center bg-white drop-shadow-md rounded ${
-          disabled && "opacity-50 cursor-not-allowed"
-        }`}
-      >
+    <S.Container>
+      <Label
+        label="Label"
+        disabled={
+          disabled || typeMessageFeedback === "border-amber-500" ? true : false
+        }
+      />
+      <S.GroupItems>
         <MenuHead
           typeMessageFeedback={typeMessageFeedback}
           toggleMenu={toggleMenu}
@@ -88,8 +81,8 @@ const SelectItem = ({
           }
         />
         {isOpen && (
-          <div className="flex flex-col items-start justify-start">
-            <div className="w-full flex items-center p-4 cursor-pointer border-b border-gray-300">
+          <S.SectionBody>
+            <S.SelectAll>
               <Label>
                 <ItemMenu
                   selectAll={selectAll}
@@ -103,29 +96,32 @@ const SelectItem = ({
                   typeItem="selectMultiples"
                 />
               </Label>
-            </div>
+            </S.SelectAll>
+            <S.Divider />
             {options.map((option, index) => (
-              <Label
-                key={index}
-                classNames={`flex items-center p-4 cursor-pointer ${
-                  index < options.length - 1 ? "border-b border-gray-300" : ""
-                } ${
-                  values.includes(option.value) ? "bg-[#2670E8] text-white" : ""
-                }`}
+              <S.SelectAll
+                borderBottom={index < options.length - 1}
+                value={values.includes(option.value)}
               >
-                <ItemMenu
-                  option={option}
-                  onChange={onChange}
-                  disabled={disabled}
-                  typeItem="selectOne"
-                  values={values}
-                />
-              </Label>
+                <Label>
+                  <ItemMenu
+                    option={option}
+                    onChange={onChange}
+                    disabled={
+                      disabled || typeMessageFeedback === "border-amber-500"
+                        ? true
+                        : false
+                    }
+                    typeItem="selectOne"
+                    values={values}
+                  />
+                </Label>
+              </S.SelectAll>
             ))}
-          </div>
+          </S.SectionBody>
         )}
-      </div>
-    </div>
+      </S.GroupItems>
+    </S.Container>
   );
 };
 

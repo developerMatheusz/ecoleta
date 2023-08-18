@@ -1,19 +1,15 @@
 import { MessageProps } from "../Message";
-import { getMessageInfo } from "../../utils/methods/getComponentInfo";
+import { getTagMessageProperties } from "./utils";
+import * as S from "./styles";
 
 const TagMessage = ({ typeMessage }: Pick<MessageProps, "typeMessage">) => {
-  const { typeMessageFeedback, typeIcon, messageFeedback } = getMessageInfo(
-    typeMessage,
-    true
-  );
+  const { typeIcon, messageFeedback } = getTagMessageProperties(typeMessage!);
 
   return (
-    <div
-      className={`flex items-center justify-center p-1 inline-flex ${typeMessageFeedback}`}
-    >
-      <div className="w-6 h-6 mr-1">{typeIcon}</div>
-      <div className="text-lg">{messageFeedback}</div>
-    </div>
+    <S.Container typeMessage={typeMessage}>
+      <S.ContainerIcon>{typeIcon}</S.ContainerIcon>
+      <S.TextArea>{messageFeedback}</S.TextArea>
+    </S.Container>
   );
 };
 

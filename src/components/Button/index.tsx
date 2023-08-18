@@ -1,7 +1,6 @@
 import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
-import classNames from "classnames";
-import { getButtonInfo } from "../../utils/methods/getComponentInfo";
 import Spinner from "../Spinner";
+import * as S from "./styles";
 
 type ButtonTypes =
   | AnchorHTMLAttributes<HTMLAnchorElement>
@@ -18,6 +17,7 @@ export type ButtonProps = {
   text?: string;
   disabled?: boolean;
   loading?: boolean;
+  onlyBorder?: boolean;
 } & ButtonTypes;
 
 const Button = ({
@@ -28,36 +28,30 @@ const Button = ({
   icon,
   text,
   disabled = false,
-  loading = false
+  loading = false,
+  onlyBorder
 }: ButtonProps) => {
-  const buttonClass = getButtonInfo({
-    loading,
-    bg,
-    size,
-    fullWidth,
-    disabled,
-    minimal
-  });
-
   return (
-    <button className={buttonClass} disabled={disabled}>
+    <S.Button
+      loading={loading}
+      onlyBorder={onlyBorder}
+      fullWidth={fullWidth}
+      disabled={disabled}
+      size={size}
+      bg={bg}
+      minimal={minimal}
+    >
       {loading ? (
         <Spinner bg={bg} />
       ) : (
         <>
-          {icon && <div className="w-5 h-5">{icon}</div>}
-          <span
-            className={classNames(
-              "font-bold",
-              icon && "ml-2",
-              minimal && "hidden"
-            )}
-          >
+          {icon && <S.Icon>{icon}</S.Icon>}
+          <S.TextArea icon={icon} minimal={minimal}>
             {text}
-          </span>
+          </S.TextArea>
         </>
       )}
-    </button>
+    </S.Button>
   );
 };
 

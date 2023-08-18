@@ -1,26 +1,16 @@
 import { TextFieldProps } from "../TextField";
+import * as S from "./styles";
 
-type LabelProps = Pick<TextFieldProps, "name" | "disabled" | "label"> & {
+export type LabelProps = Pick<TextFieldProps, "name" | "disabled" | "label"> & {
   children?: React.ReactNode;
-  classNames?: string;
 };
 
-const Label = ({
-  name,
-  disabled: isDisabled,
-  label,
-  children,
-  classNames
-}: LabelProps) => {
-  const labelClass = `w-full text-lg ${
-    isDisabled ? "opacity-50 cursor-not-allowed" : ""
-  } ${classNames || ""}`;
-
+const Label = ({ name, disabled: isDisabled, label, children }: LabelProps) => {
   return (
-    <label htmlFor={name} className={labelClass}>
+    <S.Label htmlFor={name} disabled={isDisabled}>
       {label}
       {children}
-    </label>
+    </S.Label>
   );
 };
 

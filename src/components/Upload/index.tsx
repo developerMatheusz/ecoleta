@@ -2,11 +2,12 @@ import { InputHTMLAttributes, useState } from "react";
 import { MessageProps } from "../Message";
 import TagMessage from "../TagMessage";
 import UploadFile from "../../utils/icons/UploadFile";
-import { getUploadInfo } from "../../utils/methods/getComponentInfo";
 import Label from "../Label";
 import UploadedFiles from "../UploadedFiles";
+import { getUploadProperties } from "./utils";
+import * as S from "./styles";
 
-type UploadProps = {
+export type UploadProps = {
   onInputChange?: (file: File | null) => void;
   disabled?: boolean;
 } & InputHTMLAttributes<HTMLInputElement> &
@@ -15,7 +16,7 @@ type UploadProps = {
 const Upload = ({ onInputChange, disabled, typeMessage }: UploadProps) => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [invalidFile, setInvalidFile] = useState<boolean>(false);
-  const { typeMessageFeedback, tagMessage } = getUploadInfo(typeMessage);
+  const { tagMessage } = getUploadProperties(typeMessage!);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
@@ -36,54 +37,42 @@ const Upload = ({ onInputChange, disabled, typeMessage }: UploadProps) => {
   };
 
   return (
-    <div>
-      <div
-        className={`flex flex-col pb-5 ${
-          disabled && "opacity-50 cursor-not-allowed"
-        }`}
-      >
+    <S.Container>
+      <S.Head disabled={disabled}>
         <Label
           name="file"
           disabled={disabled || typeMessage === "warning"}
           label="Envio de arquivos"
         >
-          <div
-            className={`flex items-center border-dashed bg-white rounded px-6 py-4 border border-2 ${typeMessageFeedback} ${
-              invalidFile && "border-red-600"
-            } ${
-              disabled ||
-              (typeMessage === "warning" && "opacity-50 cursor-not-allowed")
-            }`}
+          <S.GroupItems
+            typeMessage={typeMessage}
+            invalidFile={invalidFile}
+            disabled={disabled || typeMessage === "warning"}
           >
-            <div className="flex items-center w-full text-[#1351B4]">
-              <div className="w-6 h-6">
+            <S.Section>
+              <S.ContainerIcon>
                 <UploadFile />
-              </div>
-              <span className="text-lg italic font-light pl-6">
-                Selecione o(s) arquivo(s)
-              </span>
-            </div>
-            <div>
-              <input
-                className="hidden"
-                onChange={onChange}
-                id="file"
-                type="file"
-                disabled={disabled || typeMessage === "warning"}
-              />
-            </div>
-          </div>
+              </S.ContainerIcon>
+              <S.Span>Selecione o(s) arquivo(s)</S.Span>
+            </S.Section>
+            <S.Input
+              type="file"
+              onChange={onChange}
+              id="file"
+              disabled={disabled || typeMessage === "warning"}
+            />
+          </S.GroupItems>
         </Label>
-      </div>
+      </S.Head>
       {invalidFile ? (
-        <div className="mb-5">
+        <S.ContainerTagMessage>
           <TagMessage typeMessage="error" />
-        </div>
+        </S.ContainerTagMessage>
       ) : (
-        <div className="mb-5">{tagMessage}</div>
+        <S.ContainerTagMessage>{tagMessage}</S.ContainerTagMessage>
       )}
-      {!!uploadedFiles ? <UploadedFiles uploadedFiles={uploadedFiles} /> : null}
-    </div>
+      {uploadedFiles ? <UploadedFiles uploadedFiles={uploadedFiles} /> : null}
+    </S.Container>
   );
 };
 

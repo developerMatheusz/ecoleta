@@ -1,15 +1,11 @@
 import { TextFieldProps } from "../TextField";
+import * as S from "./styles";
 
-const Icon = ({ disabled: isDisabled, icon }: TextFieldProps) => {
-  return (
-    <div
-      className={`w-5 h-5 text-gray-400 ${
-        isDisabled && "opacity-50 cursor-not-allowed"
-      }`}
-    >
-      {icon}
-    </div>
-  );
+const Icon = ({
+  disabled: isDisabled,
+  icon
+}: Pick<TextFieldProps, "disabled" | "icon">) => {
+  return <S.Container disabled={isDisabled}>{icon}</S.Container>;
 };
 
 export default Icon;

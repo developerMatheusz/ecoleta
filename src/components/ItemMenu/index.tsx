@@ -1,5 +1,6 @@
-import { getItemMenuInfo } from "../../utils/methods/getComponentInfo";
+import Checkbox from "../Checkbox";
 import { Option } from "../SelectItem";
+import * as S from "./styles";
 
 export type ItemMenuProps = {
   selectAll?: boolean;
@@ -23,32 +24,30 @@ const ItemMenu = ({
   onChange
 }: ItemMenuProps) => {
   return (
-    <div className={`block min-h-[1.5rem] pl-[1.5rem] cursor-pointer`}>
+    <S.Container>
       {typeItem === "selectMultiples" ? (
-        <div>
-          <input
-            type="checkbox"
-            checked={selectAll}
+        <S.SectionInput>
+          <Checkbox
+            checked={selectAll!}
             onChange={handleSelectAll}
             disabled={disabled}
-            className={getItemMenuInfo({ typeItem, disabled })}
+            typeItem="selectMultiples"
           />
-          <span className="text-lg font-light ml-2">{message}</span>
-        </div>
+          <S.TextArea>{message}</S.TextArea>
+        </S.SectionInput>
       ) : (
-        <div>
-          <input
-            className={getItemMenuInfo({ typeItem, disabled })}
-            type="checkbox"
-            value={option!.value}
-            checked={values && values.includes(option!.value)}
+        <S.SectionInput>
+          <Checkbox
+            checked={values && values.includes(option?.value!)}
+            value={option?.value}
             onChange={onChange}
             disabled={disabled}
+            typeItem="selectOne"
           />
-          <span className="text-lg font-light ml-2">{option!.label}</span>
-        </div>
+          <S.TextArea>{option!.label}</S.TextArea>
+        </S.SectionInput>
       )}
-    </div>
+    </S.Container>
   );
 };
 

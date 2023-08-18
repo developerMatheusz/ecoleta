@@ -1,9 +1,10 @@
 import { TextareaHTMLAttributes, useState } from "react";
 import { MessageProps } from "../Message";
-import { getTextAreaInfo } from "../../utils/methods/getComponentInfo";
+import { getTextAreaProperties } from "./utils";
 import Label from "../Label";
+import * as S from "./styles";
 
-type TextAreaProps = {
+export type TextAreaProps = {
   onTextareaChange?: (value: string) => void;
   label?: string;
   initialValue?: string;
@@ -23,7 +24,7 @@ const TextArea = ({
   const [value, setValue] = useState(initialValue);
 
   const { tagMessage, colorMessage, disableTextarea } =
-    getTextAreaInfo(typeMessage);
+    getTextAreaProperties(typeMessage);
 
   const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = event.currentTarget.value;
@@ -33,24 +34,23 @@ const TextArea = ({
   };
 
   return (
-    <div className="flex flex-col">
+    <S.Container>
       {!!label && (
         <Label name={name} disabled={disabled || disableTextarea}>
           {label}
         </Label>
       )}
-      <textarea
+      <S.InputTextArea
         onChange={onChange}
         value={value}
         disabled={disabled || disableTextarea}
         {...(label ? { id: name } : {})}
-        className={`italic-placeholder rounded text-base text-black p-2 focus:outline-none resize-none h-32 border border-1 ${colorMessage} ${
-          (disabled || disableTextarea) && "opacity-50 cursor-not-allowed"
-        }`}
         placeholder={placeholder}
+        colorMessage={colorMessage}
+        disableTextarea={disableTextarea}
       />
-      <div className="py-2 inline-flex">{tagMessage}</div>
-    </div>
+      <S.TextArea>{tagMessage}</S.TextArea>
+    </S.Container>
   );
 };
 

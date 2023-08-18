@@ -1,8 +1,9 @@
 import { InputHTMLAttributes, useState } from "react";
 import { MessageProps } from "../Message";
-import { getTextFieldInfo } from "../../utils/methods/getComponentInfo";
 import Label from "../Label";
 import Icon from "../Icon";
+import { getTextFieldProperties } from "./utils";
+import * as S from "./styles";
 
 export type TextFieldProps = {
   onInputChange?: (value: string) => void;
@@ -25,11 +26,9 @@ const TextField = ({
   type
 }: TextFieldProps) => {
   const [value, setValue] = useState(initialValue);
-  const {
-    tagMessage,
-    colorMessage,
-    disabled: isDisabledMessage
-  } = getTextFieldInfo(typeMessage);
+  const { tagMessage, disabled: isDisabledMessage } = getTextFieldProperties(
+    typeMessage!
+  );
 
   const isDisabled = isDisabledProp || isDisabledMessage;
 
@@ -41,32 +40,23 @@ const TextField = ({
   };
 
   return (
-    <div className="flex flex-col">
-      <div
-        className={`flex flex-col ${
-          isDisabled && "opacity-50 cursor-not-allowed"
-        }`}
-      >
+    <S.Container>
+      <S.Section isDisabled={isDisabled}>
         {!!label && <Label name={name} disabled={isDisabled} label={label} />}
-        <div
-          className={`flex items-center p-2 border border-1 rounded bg-white ${colorMessage}`}
-        >
+        <S.ContainerInput typeMessage={typeMessage} isDisabled={isDisabled}>
           {!!icon && <Icon disabled={isDisabled} icon={icon} />}
-          <input
+          <S.Input
             onChange={onChange}
             value={value}
             disabled={isDisabled}
             {...(label ? { id: name } : {})}
-            className={`italic-placeholder bg-transparent text-base text-black focus:outline-none ml-2 resize-none ${
-              isDisabled && "opacity-50 cursor-not-allowed"
-            }`}
             placeholder={placeholder}
             type={type}
           />
-        </div>
-      </div>
-      <div className="py-2 inline-flex">{tagMessage}</div>
-    </div>
+        </S.ContainerInput>
+      </S.Section>
+      <S.TagMessageArea>{tagMessage}</S.TagMessageArea>
+    </S.Container>
   );
 };
 

@@ -1,21 +1,20 @@
-import { getTooltipInfo } from "../../utils/methods/getComponentInfo";
 import { MessageProps } from "../Message";
+import { getTooltipProperties } from "./utils";
+import * as S from "./styles";
 
 const Tooltip = ({ typeMessage }: MessageProps) => {
-  const { typeMessageFeedback, title, subtitle } = getTooltipInfo(typeMessage);
+  const { title, subtitle } = getTooltipProperties(typeMessage!);
 
   return (
-    <div className="relative inline-block">
-      <div className={`${typeMessageFeedback} p-2 rounded`}>
-        <div className="flex flex-col items-center justify-center">
-          <div className="text-lg">{title}</div>
-          <div className="font-light text-base">{subtitle}</div>
-        </div>
-      </div>
-      <div
-        className={`absolute w-4 h-4 ${typeMessageFeedback} transform rotate-45 -translate-y-2/3 left-1/2`}
-      />
-    </div>
+    <S.Container>
+      <S.Head typeMessage={typeMessage}>
+        <S.Section>
+          <S.Title>{title}</S.Title>
+          <S.Subtitle>{subtitle}</S.Subtitle>
+        </S.Section>
+      </S.Head>
+      <S.DownArrow typeMessage={typeMessage} />
+    </S.Container>
   );
 };
 

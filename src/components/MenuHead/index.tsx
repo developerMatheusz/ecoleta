@@ -1,8 +1,9 @@
 import DownArrow from "../../utils/icons/DownArrow";
 import Search from "../../utils/icons/Search";
 import UpArrow from "../../utils/icons/UpArrow";
+import * as S from "./styles";
 
-type MenuHeadProps = {
+export type MenuHeadProps = {
   typeMessageFeedback: string;
   toggleMenu: () => void;
   isOpen: boolean;
@@ -16,56 +17,40 @@ const MenuHead = ({
   disabled
 }: MenuHeadProps) => {
   return (
-    <div
-      className={`flex justify-between cursor-pointer px-4 py-2 border border-2 rounded ${typeMessageFeedback} ${
-        disabled && "opacity-50 cursor-not-allowed"
-      } ${
-        typeMessageFeedback === "border-amber-500" &&
-        "opacity-50 cursor-not-allowed"
-      }`}
+    <S.Container
+      typeMessageFeedback={typeMessageFeedback}
+      disabled={disabled}
       onClick={toggleMenu}
     >
-      <div
-        className={`flex items-center ${
-          disabled && "opacity-50 cursor-not-allowed"
-        } ${
-          typeMessageFeedback === "border-amber-500" &&
-          "opacity-50 cursor-not-allowed"
-        }`}
+      <S.SectionHead
+        typeMessageFeedback={typeMessageFeedback}
+        disabled={disabled}
       >
-        <div className="w-6 h-6 mr-2 text-gray-400">
+        <S.ContainerIcon size="large">
           <Search />
-        </div>
-        <div className="text-lg">Texto do item 01 + (1)</div>
-      </div>
+        </S.ContainerIcon>
+        <S.Span>Texto do item 01 + (1)</S.Span>
+      </S.SectionHead>
       {isOpen ? (
-        <div
-          className={`flex items-center ${
-            disabled && "opacity-50 cursor-not-allowed"
-          } ${
-            typeMessageFeedback === "border-amber-500" &&
-            "opacity-50 cursor-not-allowed"
-          }`}
+        <S.SectionHead
+          typeMessageFeedback={typeMessageFeedback}
+          disabled={disabled}
         >
-          <div className="w-4 h-4 text-[#1351B4]">
+          <S.ContainerIcon isBlue size="normal">
             <UpArrow />
-          </div>
-        </div>
+          </S.ContainerIcon>
+        </S.SectionHead>
       ) : (
-        <div
-          className={`flex items-center ${
-            disabled && "opacity-50 cursor-not-allowed"
-          } ${
-            typeMessageFeedback === "border-amber-500" &&
-            "opacity-50 cursor-not-allowed"
-          }`}
+        <S.SectionHead
+          typeMessageFeedback={typeMessageFeedback}
+          disabled={disabled}
         >
-          <div className="w-4 h-4 text-[#1351B4]">
+          <S.ContainerIcon isBlue size="normal">
             <DownArrow />
-          </div>
-        </div>
+          </S.ContainerIcon>
+        </S.SectionHead>
       )}
-    </div>
+    </S.Container>
   );
 };
 

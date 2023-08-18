@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindStyledComponents from "tailwind-styled-components";
 
 const config: Config = {
   content: [
@@ -7,6 +8,6 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {},
-  plugins: []
+  plugins: [tailwindStyledComponents]
 };
 export default config;
