@@ -5,7 +5,7 @@ export const Container = tw.div`
 `;
 
 export const SectionHead = tw.div`
-  flex items-start justify-start w-full
+  flex items-center justify-start w-full
 `;
 
 export const Title = tw.div`

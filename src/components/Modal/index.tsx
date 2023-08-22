@@ -2,14 +2,15 @@ import Button from "../Button";
 import * as S from "./styles";
 
 type ModalProps = {
+  title: string;
   text: string;
 };
 
-const Modal = ({ text }: ModalProps) => {
+const Modal = ({ title, text }: ModalProps) => {
   return (
     <S.Container>
       <S.SectionHead>
-        <S.Title>Título</S.Title>
+        <S.Title>{title}</S.Title>
       </S.SectionHead>
       <S.SectionContent>
         <S.Text>{text}</S.Text>

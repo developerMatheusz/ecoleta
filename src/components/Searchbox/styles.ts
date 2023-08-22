@@ -22,5 +22,5 @@ export const SectionIcon = tw.div`
 `;
 
 export const ContainerIcon = tw.div`
-  hover:bg-[#1351B4]/25 rounded-full p-2 cursor-pointer
+  hover:bg-[#1351B4]/25 rounded-full p-2 cursor-pointer w-10 h-10
 `;

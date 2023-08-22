@@ -20,10 +20,5 @@ export const Default: Story = {
     disabled: false,
     label: "Label"
   },
-  argTypes: {
-    classNames: {
-      type: "symbol"
-    }
-  },
   render: (args) => <Label {...args} />
 };

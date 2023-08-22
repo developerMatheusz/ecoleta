@@ -38,7 +38,11 @@ const ItemMenu = ({
       ) : (
         <S.SectionInput>
           <Checkbox
-            checked={values && values.includes(option?.value!)}
+            checked={
+              values &&
+              option?.value !== undefined &&
+              values.includes(option.value)
+            }
             value={option?.value}
             onChange={onChange}
             disabled={disabled}

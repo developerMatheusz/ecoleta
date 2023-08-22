@@ -1,5 +1,4 @@
 import { InputHTMLAttributes, useEffect, useRef, useState } from "react";
-import Icon from "../Icon";
 import Search from "../../utils/icons/Search";
 import * as S from "./styles";
 
@@ -65,7 +64,7 @@ const Searchbox = ({
         />
         <S.SectionIcon>
           <S.ContainerIcon>
-            <Icon icon={<Search color="blue" />} />
+            <Search color="blue" />
           </S.ContainerIcon>
         </S.SectionIcon>
       </S.GroupItems>

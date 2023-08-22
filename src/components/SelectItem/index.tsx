@@ -100,6 +100,7 @@ const SelectItem = ({
             <S.Divider />
             {options.map((option, index) => (
               <S.SelectAll
+                key={index}
                 borderBottom={index < options.length - 1}
                 value={values.includes(option.value)}
               >

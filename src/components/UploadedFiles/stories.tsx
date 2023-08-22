@@ -17,13 +17,12 @@ type Story = StoryObj<typeof UploadedFiles>;
 const generateFakeUploadedFiles = (count: number): File[] => {
   const fakeFiles: File[] = [];
   for (let i = 0; i < count; i++) {
-    fakeFiles.push({
-      name: `fake_file_${i + 1}.txt`,
-      size: Math.random() * (5 * 1024 * 1024),
-      lastModified: Date.now(),
-      webkitRelativePath: "",
-      type: "text/plain"
+    const fakeFile = new File([new Blob()], `fake_file_${i + 1}.txt`, {
+      type: "text/plain",
+      lastModified: Date.now()
     });
+
+    fakeFiles.push(fakeFile);
   }
   return fakeFiles;
 };
@@ -31,6 +30,11 @@ const generateFakeUploadedFiles = (count: number): File[] => {
 export const Default: Story = {
   args: {
     uploadedFiles: generateFakeUploadedFiles(3)
+  },
+  argTypes: {
+    uploadedFiles: {
+      type: "symbol"
+    }
   },
   render: (args) => <UploadedFiles {...args} />
 };
