@@ -1,3 +1,5 @@
+"use client";
+
 import RightArrow from "../../utils/icons/RightArrow";
 import * as S from "./styles";
 

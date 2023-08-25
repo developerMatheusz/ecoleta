@@ -1,3 +1,5 @@
+"use client";
+
 import { SectionHead, Title } from "../Modal/styles";
 import * as S from "./styles";
 

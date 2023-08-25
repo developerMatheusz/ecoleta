@@ -1,3 +1,5 @@
+"use client";
+
 import { MessageProps } from "../Message";
 import { getTagMessageProperties } from "./utils";
 import * as S from "./styles";

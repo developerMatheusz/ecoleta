@@ -1,3 +1,5 @@
+"use client";
+
 import { ItemMenuProps } from "../ItemMenu";
 import * as S from "./styles";
 

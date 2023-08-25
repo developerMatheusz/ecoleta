@@ -33,5 +33,5 @@ export const TextArea = tw.span<Pick<ButtonProps, "icon" | "minimal">>`
 `;
 
 export const Icon = tw.div`
-    w-5 h-5
+  w-6 h-6
 `;

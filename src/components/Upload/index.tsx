@@ -1,3 +1,5 @@
+"use client";
+
 import { InputHTMLAttributes, useState } from "react";
 import { MessageProps } from "../Message";
 import TagMessage from "../TagMessage";

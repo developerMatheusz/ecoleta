@@ -1,3 +1,5 @@
+"use client";
+
 import { InputHTMLAttributes, useEffect, useRef, useState } from "react";
 import Search from "../../utils/icons/Search";
 import * as S from "./styles";

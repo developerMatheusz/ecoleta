@@ -1,3 +1,5 @@
+"use client";
+
 import DownArrow from "../../utils/icons/DownArrow";
 import Search from "../../utils/icons/Search";
 import UpArrow from "../../utils/icons/UpArrow";

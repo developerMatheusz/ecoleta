@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import House from "../../utils/icons/House";
 import RightArrowLight from "../../utils/icons/RightArrowLight";

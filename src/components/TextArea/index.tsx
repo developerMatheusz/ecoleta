@@ -1,3 +1,5 @@
+"use client";
+
 import { TextareaHTMLAttributes, useState } from "react";
 import { MessageProps } from "../Message";
 import { getTextAreaProperties } from "./utils";

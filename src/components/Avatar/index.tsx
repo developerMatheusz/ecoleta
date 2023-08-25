@@ -1,3 +1,5 @@
+"use client";
+
 import Profile from "../../utils/icons/Profile";
 import { FileDrop } from "react-file-drop";
 import { PulseLoader } from "react-spinners";

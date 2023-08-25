@@ -1,12 +1,16 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Button from "../Button";
 import Link from "next/link";
-import Contrast from "../../utils/icons/Contrast";
 import Profile from "../../utils/icons/Profile";
 import DottedMenu from "../../utils/icons/DottedMenu";
+import { HeaderProps } from "../Header";
+import { EarDeaf } from "@styled-icons/fa-solid/EarDeaf";
+import { Contrast } from "@styled-icons/foundation/Contrast";
 import * as S from "./styles";
 
-const Navbar = () => {
+const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -27,61 +31,95 @@ const Navbar = () => {
   }, []);
 
   return (
-    <S.Navbar>
-      <S.GroupItems>
-        {isSmallScreen ? (
-          <>
+    <>
+      {typeHeader === "normal" ? (
+        <S.Navbar>
+          <S.GroupItems>
+            {isSmallScreen ? (
+              <>
+                <S.ContainerBtnContrast typeHeader={typeHeader}>
+                  <Button
+                    bg="white"
+                    icon={<DottedMenu />}
+                    minimal
+                    size="small"
+                    toggleMenu={toggleMenu}
+                  />
+                  {menuVisible && (
+                    <S.ContainerMenuSmall>
+                      <Link href="#">
+                        <S.AreaLink>Órgãos do Governo</S.AreaLink>
+                      </Link>
+                      <Link href="#">
+                        <S.AreaLink>Acesso à Informação</S.AreaLink>
+                      </Link>
+                      <Link href="#">
+                        <S.AreaLink>Legislação</S.AreaLink>
+                      </Link>
+                      <Link href="#">
+                        <S.AreaLink>Acessibilidade</S.AreaLink>
+                      </Link>
+                    </S.ContainerMenuSmall>
+                  )}
+                </S.ContainerBtnContrast>
+              </>
+            ) : (
+              <>
+                <Link href="#">
+                  <S.AreaLink>Órgãos do Governo</S.AreaLink>
+                </Link>
+                <Link href="#">
+                  <S.AreaLink>Acesso à Informação</S.AreaLink>
+                </Link>
+                <Link href="#">
+                  <S.AreaLink>Legislação</S.AreaLink>
+                </Link>
+                <Link href="#">
+                  <S.AreaLink>Acessibilidade</S.AreaLink>
+                </Link>
+              </>
+            )}
+            <S.Divider />
+            <S.ContainerBtnContrast typeHeader={typeHeader}>
+              <Button bg="white" icon={<Contrast />} minimal size="small" />
+            </S.ContainerBtnContrast>
+            <S.ContainerBtnLogin>
+              <Link href="/auth/login" target="_self">
+                <Button
+                  bg="blue"
+                  size="medium"
+                  icon={<Profile />}
+                  text="Entrar"
+                />
+              </Link>
+            </S.ContainerBtnLogin>
+          </S.GroupItems>
+        </S.Navbar>
+      ) : (
+        <S.Navbar>
+          <S.GroupItems>
             <S.ContainerBtnContrast>
               <Button
                 bg="white"
-                icon={<DottedMenu />}
+                icon={<Contrast size={20} />}
                 minimal
                 size="small"
-                toggleMenu={toggleMenu}
               />
-              {menuVisible && (
-                <S.ContainerMenuSmall>
-                  <Link href="#">
-                    <S.AreaLink>Link de acesso 1</S.AreaLink>
-                  </Link>
-                  <Link href="#">
-                    <S.AreaLink>Link de acesso 2</S.AreaLink>
-                  </Link>
-                  <Link href="#">
-                    <S.AreaLink>Link de acesso 3</S.AreaLink>
-                  </Link>
-                  <Link href="#">
-                    <S.AreaLink>Link de acesso 4</S.AreaLink>
-                  </Link>
-                </S.ContainerMenuSmall>
-              )}
+              <S.Span>Alto contraste</S.Span>
             </S.ContainerBtnContrast>
-          </>
-        ) : (
-          <>
-            <Link href="#">
-              <S.AreaLink>Link de acesso 1</S.AreaLink>
-            </Link>
-            <Link href="#">
-              <S.AreaLink>Link de acesso 2</S.AreaLink>
-            </Link>
-            <Link href="#">
-              <S.AreaLink>Link de acesso 3</S.AreaLink>
-            </Link>
-            <Link href="#">
-              <S.AreaLink>Link de acesso 4</S.AreaLink>
-            </Link>
-          </>
-        )}
-        <S.Divider />
-        <S.ContainerBtnContrast>
-          <Button bg="white" icon={<Contrast />} minimal size="small" />
-        </S.ContainerBtnContrast>
-        <S.ContainerBtnLogin>
-          <Button bg="blue" size="medium" icon={<Profile />} text="Entrar" />
-        </S.ContainerBtnLogin>
-      </S.GroupItems>
-    </S.Navbar>
+            <S.ContainerBtnContrast>
+              <Button
+                bg="white"
+                icon={<EarDeaf size={16} />}
+                minimal
+                size="small"
+              />
+              <S.Span>VLibras</S.Span>
+            </S.ContainerBtnContrast>
+          </S.GroupItems>
+        </S.Navbar>
+      )}
+    </>
   );
 };
 

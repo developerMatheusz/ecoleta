@@ -1,3 +1,5 @@
+"use client";
+
 import Checkbox from "../Checkbox";
 import { Option } from "../SelectItem";
 import * as S from "./styles";

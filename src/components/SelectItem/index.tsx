@@ -1,3 +1,5 @@
+"use client";
+
 import { SelectHTMLAttributes, useState } from "react";
 import { MessageProps } from "../Message";
 import Label from "../Label";

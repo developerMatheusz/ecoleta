@@ -1,11 +1,9 @@
-import { Roboto } from "next/font/google";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
+import NextAuthSessionProvider from "./providers/NextAuthSessionProvider";
 import "./globals.css";
 
 TimeAgo.addLocale(en);
-
-const roboto = Roboto({ subsets: ["latin"], weight: "700" });
 
 export default function RootLayout({
   children
@@ -14,8 +12,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body className={roboto.className}>
-        <div>{children}</div>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"
+        />
+      </head>
+      <body>
+        <NextAuthSessionProvider>
+          <div>{children}</div>
+        </NextAuthSessionProvider>
       </body>
     </html>
   );

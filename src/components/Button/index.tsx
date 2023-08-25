@@ -1,3 +1,5 @@
+"use client";
+
 import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 import Spinner from "../Spinner";
 import * as S from "./styles";

@@ -1,3 +1,5 @@
+"use client";
+
 import { ButtonProps } from "../Button";
 import * as S from "./styles";
 

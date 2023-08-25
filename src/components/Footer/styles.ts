@@ -5,7 +5,7 @@ export const Container = tw.div`
 `;
 
 export const Image = tw.img`
-  w-20
+  w-44
 `;
 
 export const ContentSmallScreen = tw.div`

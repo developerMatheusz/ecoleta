@@ -1,7 +1,14 @@
 import tw from "tailwind-styled-components";
+import { HeaderProps } from ".";
 
-export const Container = tw.div`
+type ContainerProps = {
+  typeHeader?: "normal" | "login";
+};
+
+export const Container = tw.div<ContainerProps>`
   flex flex-col py-4 px-14 bg-white
+
+  ${(props) => (props.typeHeader === "normal" ? "px-14" : "px-2 shadow-md")}
 `;
 
 export const SectionHeader = tw.div`
@@ -9,9 +16,11 @@ export const SectionHeader = tw.div`
 `;
 
 export const Image = tw.img`
-  w-28
+  w-44
 `;
 
-export const GroupItems = tw.div`
-  flex items-center justify-between mb-5
+export const GroupItems = tw.div<Pick<HeaderProps, "typeHeader">>`
+  flex items-center justify-between
+
+  ${(props) => (props.typeHeader === "normal" ? "mb-5" : "mb-0")}
 `;

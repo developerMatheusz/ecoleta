@@ -15,5 +15,8 @@ export default meta;
 type Story = StoryObj<typeof Header>;
 
 export const Default: Story = {
-  render: () => <Header />
+  args: {
+    typeHeader: "normal"
+  },
+  render: (args) => <Header {...args} />
 };

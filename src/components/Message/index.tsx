@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import Close from "../../utils/icons/Close";
 import { getMessageProperties } from "./utils";
