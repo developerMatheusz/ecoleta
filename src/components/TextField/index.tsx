@@ -1,6 +1,6 @@
 "use client";
 
-import { InputHTMLAttributes, useState } from "react";
+import React, { InputHTMLAttributes, useState } from "react";
 import { MessageProps } from "../Message";
 import Label from "../Label";
 import Icon from "../Icon";

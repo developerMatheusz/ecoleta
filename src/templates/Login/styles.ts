@@ -5,21 +5,21 @@ export const Container = tw.div`
 `;
 
 export const GroupItems = tw.div`
-  w-full h-full flex items-center
+  w-full h-full flex  justify-center gap-8 my-10
 `;
 
 export const ContainerBackground = tw.div`
-  w-3/5 h-full border border-4 border-green-500
+  w-1/2 h-full
 `;
 
-export const AreaBackground = tw.div`
-  pl-16 pr-8 pt-8
+export const Image = tw.img`
+  w-full h-full bg-cover
 `;
 
 export const ContainerForm = tw.div`
-  w-2/5 h-full border border-4 border-red-500
+  w-96 h-full
 `;
 
 export const AreaForm = tw.div`
-  mt-8 mr-20 shadow-md border-t border-gray-100/50
+  shadow-md border border-gray-300/25
 `;

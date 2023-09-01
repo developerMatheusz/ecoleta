@@ -8,10 +8,7 @@ export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" }
-      },
+      credentials: {},
       async authorize(credentials, req) {
         const res = await fetch(`${process.env.DJANGO_SERVER}/user/login/`, {
           method: "POST",

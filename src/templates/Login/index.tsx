@@ -10,14 +10,10 @@ const LoginTemplate = () => {
       <Header typeHeader="login" />
       <S.GroupItems>
         <S.ContainerBackground>
-          <S.AreaBackground>
-            <Image
-              src="/background.jpg"
-              alt="Imagem de fundo sobre trabalho da empresa GeoGIS Geotecnologia LTDA."
-              width={1000}
-              height={1000}
-            />
-          </S.AreaBackground>
+          <S.Image
+            src="/background.jpg"
+            alt="Imagem de fundo sobre trabalho da empresa GeoGIS Geotecnologia LTDA."
+          />
         </S.ContainerBackground>
         <S.ContainerForm>
           <S.AreaForm>

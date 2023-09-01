@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import Link from "next/link";
 import Profile from "../../utils/icons/Profile";

@@ -6,7 +6,7 @@ type ContainerProps = {
 };
 
 export const Container = tw.div<ContainerProps>`
-  flex flex-col py-4 px-14 bg-white
+  flex flex-col py-4 px-14 bg-white w-full
 
   ${(props) => (props.typeHeader === "normal" ? "px-14" : "px-2 shadow-md")}
 `;

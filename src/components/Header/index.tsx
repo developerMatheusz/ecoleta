@@ -4,6 +4,7 @@ import Link from "next/link";
 import Menu from "../Menu";
 import Navbar from "../Navbar";
 import Searchbox from "../Searchbox";
+import React from "react";
 import * as S from "./styles";
 
 export type HeaderProps = {

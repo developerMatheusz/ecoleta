@@ -6,7 +6,7 @@ import { getMessageProperties } from "./utils";
 import * as S from "./styles";
 
 export type MessageProps = {
-  typeMessage?: "success" | "warning" | "error" | "info";
+  typeMessage?: "success" | "warning" | "error" | "info" | "";
 };
 
 const Message = ({ typeMessage }: MessageProps) => {
