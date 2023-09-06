@@ -1,18 +1,21 @@
 "use client";
 
-import { InputHTMLAttributes, useEffect, useRef, useState } from "react";
+import React, { InputHTMLAttributes, useEffect, useRef, useState } from "react";
 import Search from "../../utils/icons/Search";
+import { HeaderProps } from "../Header";
 import * as S from "./styles";
 
 export type SearchboxProps = {
   onInputChange?: (value: string) => void;
   initialValue?: string;
-} & InputHTMLAttributes<HTMLInputElement>;
+} & InputHTMLAttributes<HTMLInputElement> &
+  Pick<HeaderProps, "searchFieldPosition">;
 
 const Searchbox = ({
   onInputChange,
   initialValue,
-  placeholder
+  placeholder,
+  searchFieldPosition
 }: SearchboxProps) => {
   const [value, setValue] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
@@ -50,10 +53,11 @@ const Searchbox = ({
   }, [isFocused]);
 
   return (
-    <S.Container>
+    <S.Container searchFieldPosition={searchFieldPosition}>
       <S.GroupItems
         ref={divRef}
         isFocused={isFocused}
+        searchFieldPosition={searchFieldPosition}
         onClick={() => setIsFocused(true)}
       >
         <S.Input

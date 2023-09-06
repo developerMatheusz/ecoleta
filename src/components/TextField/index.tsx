@@ -13,6 +13,7 @@ export type TextFieldProps = {
   initialValue?: string;
   disabled?: boolean;
   icon?: React.ReactNode;
+  error?: string;
 } & InputHTMLAttributes<HTMLInputElement> &
   Pick<MessageProps, "typeMessage">;
 
@@ -25,7 +26,8 @@ const TextField = ({
   name,
   placeholder,
   typeMessage,
-  type
+  type,
+  error
 }: TextFieldProps) => {
   const [value, setValue] = useState(initialValue);
   const { tagMessage, disabled: isDisabledMessage } = getTextFieldProperties(
@@ -56,6 +58,7 @@ const TextField = ({
             type={type}
           />
         </S.ContainerInput>
+        {!!error && <span className="text-red-500 py-2">{error}</span>}
       </S.Section>
       <S.TagMessageArea>{tagMessage}</S.TagMessageArea>
     </S.Container>

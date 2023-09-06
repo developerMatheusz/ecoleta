@@ -1,6 +1,7 @@
 "use client";
 
-import Profile from "../../utils/icons/Profile";
+import React from "react";
+import { PersonFill } from "@styled-icons/bootstrap/PersonFill";
 import { FileDrop } from "react-file-drop";
 import { PulseLoader } from "react-spinners";
 import { useState } from "react";
@@ -43,7 +44,7 @@ const Avatar = ({ size }: AvatarProps) => {
           </S.ContainerUpload>
         )}
         <S.ContainerIcon size={size}>
-          <Profile />
+          <PersonFill />
         </S.ContainerIcon>
       </S.Container>
     </FileDrop>

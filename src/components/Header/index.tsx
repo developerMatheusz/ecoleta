@@ -9,9 +9,13 @@ import * as S from "./styles";
 
 export type HeaderProps = {
   typeHeader?: "normal" | "login";
+  searchFieldPosition?: "center" | "right";
 };
 
-const Header = ({ typeHeader = "normal" }: HeaderProps) => {
+const Header = ({
+  typeHeader = "normal",
+  searchFieldPosition = "center"
+}: HeaderProps) => {
   return (
     <>
       {typeHeader === "normal" ? (
@@ -27,10 +31,22 @@ const Header = ({ typeHeader = "normal" }: HeaderProps) => {
             </S.SectionHeader>
             <Navbar typeHeader="normal" />
           </S.GroupItems>
-          <S.GroupItems>
-            <Menu text="Serviços e informações do Brasil" />
-          </S.GroupItems>
-          <Searchbox placeholder="O que você procura?" />
+          {searchFieldPosition === "center" ? (
+            <>
+              <S.GroupItems>
+                <Menu text="Serviços e informações do Brasil" />
+              </S.GroupItems>
+              <Searchbox placeholder="O que você procura?" />
+            </>
+          ) : (
+            <S.GroupItems>
+              <Menu text="Serviços e informações do Brasil" />
+              <Searchbox
+                placeholder="O que você procura?"
+                searchFieldPosition={searchFieldPosition}
+              />
+            </S.GroupItems>
+          )}
         </S.Container>
       ) : (
         <S.Container>

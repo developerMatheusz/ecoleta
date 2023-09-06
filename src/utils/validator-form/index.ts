@@ -1,8 +1,16 @@
 import Joi from "joi";
 
 const fieldValidations = {
-  username: Joi.string().min(5).required(),
-  password: Joi.string().required()
+  username: Joi.string()
+    .min(5)
+    .required()
+    .label("Nome de usuário")
+    .messages({ "string.min": "{{#label}} deve ter no mínimo 5 caracteres" }),
+  password: Joi.string()
+    .min(5)
+    .required()
+    .label("Senha de acesso")
+    .messages({ "string.min": "{{#label}} deve ter no mínimo 5 caracteres" })
 };
 
 export type FieldErrors = {

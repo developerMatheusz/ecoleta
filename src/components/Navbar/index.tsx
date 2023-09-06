@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import MenuWithAvatar from "../MenuWithAvatar";
 import Button from "../Button";
 import Link from "next/link";
 import Profile from "../../utils/icons/Profile";
@@ -13,6 +15,7 @@ import * as S from "./styles";
 const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+  const { status } = useSession();
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -50,8 +53,8 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
                       <Link href="#">
                         <S.AreaLink>Órgãos do Governo</S.AreaLink>
                       </Link>
-                      <Link href="#">
-                        <S.AreaLink>Acesso à Informação</S.AreaLink>
+                      <Link href="/map">
+                        <S.AreaLink>Mapa</S.AreaLink>
                       </Link>
                       <Link href="#">
                         <S.AreaLink>Legislação</S.AreaLink>
@@ -68,8 +71,8 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
                 <Link href="#">
                   <S.AreaLink>Órgãos do Governo</S.AreaLink>
                 </Link>
-                <Link href="#">
-                  <S.AreaLink>Acesso à Informação</S.AreaLink>
+                <Link href="/map">
+                  <S.AreaLink>Mapa</S.AreaLink>
                 </Link>
                 <Link href="#">
                   <S.AreaLink>Legislação</S.AreaLink>
@@ -84,14 +87,20 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
               <Button bg="white" icon={<Contrast />} minimal size="small" />
             </S.ContainerBtnContrast>
             <S.ContainerBtnLogin>
-              <Link href="/auth/login" target="_self">
-                <Button
-                  bg="blue"
-                  size="medium"
-                  icon={<Profile />}
-                  text="Entrar"
-                />
-              </Link>
+              {status === "unauthenticated" ? (
+                <Link href="/auth/login" target="_self">
+                  <Button
+                    bg="blue"
+                    size="medium"
+                    icon={<Profile />}
+                    text="Entrar"
+                  />
+                </Link>
+              ) : (
+                <div>
+                  <MenuWithAvatar />
+                </div>
+              )}
             </S.ContainerBtnLogin>
           </S.GroupItems>
         </S.Navbar>

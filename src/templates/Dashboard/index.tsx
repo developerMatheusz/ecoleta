@@ -1,13 +1,12 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import React from "react";
+import Header from "@/components/Header";
 
 const DashboardTemplate = () => {
-  const { data: session, status } = useSession();
-
   return (
     <div>
-      Usuário autenticado como <strong>{session?.user?.email}</strong>
+      <Header typeHeader="normal" />
     </div>
   );
 };

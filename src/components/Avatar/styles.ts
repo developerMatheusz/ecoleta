@@ -2,18 +2,18 @@ import tw from "tailwind-styled-components";
 import { AvatarProps } from ".";
 
 export const Container = tw.div`
-  bg-[#DBE8FB] flex items-center justify-center p-2 rounded-full inline-block overflow-hidden relative
+  bg-gray-900/25 flex items-center justify-center p-2 rounded-full inline-block overflow-hidden relative
 `;
 
 export const ContainerIcon = tw.div<Pick<AvatarProps, "size">>`
-  w-12 h-12 pt-2 text-[#C5D4EB]
+  w-12 h-12 text-white flex items-center justify-center
   ${(props) => {
     if (props.size === "small") {
-      return "w-8 h-8";
+      return "w-5 h-5";
     } else if (props.size === "medium") {
-      return "w-14 h-14";
+      return "w-10 h-10";
     } else {
-      return "w-20 h-20";
+      return "w-14 h-14";
     }
   }}
 `;
