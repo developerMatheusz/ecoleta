@@ -47,7 +47,7 @@ export const TagMessageArea = tw.div`
 `;
 
 export const Input = tw.input<Pick<TextFieldProps, "disabled">>`
-  italic-placeholder bg-transparent text-base text-black focus:outline-none ml-2 resize-none
+  italic-placeholder bg-transparent text-base text-black focus:outline-none ml-2 resize-none w-full
 
   ${(props) => props.disabled && "opacity-50 cursor-not-allowed"}
 `;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -11,8 +12,8 @@ export const options: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
-      async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
+      async authorize(credentials: any) {
+        if (!credentials?.cpf || !credentials?.password) {
           throw new Error("Credenciais inválidas");
         }
 
@@ -23,7 +24,6 @@ export const options: NextAuthOptions = {
         });
 
         const data = await res.json();
-        console.log(data);
 
         if (data.user) {
           const user = {

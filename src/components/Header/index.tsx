@@ -7,19 +7,29 @@ import Searchbox from "../Searchbox";
 import React from "react";
 import * as S from "./styles";
 
+type User = {
+  user: {
+    name: string | null | undefined;
+    email: string | null | undefined;
+    image: string | null | undefined;
+  };
+};
+
 export type HeaderProps = {
-  typeHeader?: "normal" | "login";
-  searchFieldPosition?: "center" | "right";
+  typeheader?: "normal" | "login";
+  searchfieldposition?: "center" | "right";
+  userSession?: User;
 };
 
 const Header = ({
-  typeHeader = "normal",
-  searchFieldPosition = "center"
+  typeheader = "normal",
+  searchfieldposition = "center",
+  userSession
 }: HeaderProps) => {
   return (
     <>
-      {typeHeader === "normal" ? (
-        <S.Container typeHeader={typeHeader}>
+      {typeheader === "normal" ? (
+        <S.Container typeheader={typeheader}>
           <S.GroupItems>
             <S.SectionHeader>
               <Link href="/">
@@ -29,9 +39,9 @@ const Header = ({
                 />
               </Link>
             </S.SectionHeader>
-            <Navbar typeHeader="normal" />
+            <Navbar typeheader="normal" userSession={userSession} />
           </S.GroupItems>
-          {searchFieldPosition === "center" ? (
+          {searchfieldposition === "center" ? (
             <>
               <S.GroupItems>
                 <Menu text="Serviços e informações do Brasil" />
@@ -43,7 +53,7 @@ const Header = ({
               <Menu text="Serviços e informações do Brasil" />
               <Searchbox
                 placeholder="O que você procura?"
-                searchFieldPosition={searchFieldPosition}
+                searchfieldposition={searchfieldposition}
               />
             </S.GroupItems>
           )}
@@ -59,7 +69,7 @@ const Header = ({
                 />
               </Link>
             </S.SectionHeader>
-            <Navbar typeHeader="login" />
+            <Navbar typeheader="login" userSession={userSession} />
           </S.GroupItems>
         </S.Container>
       )}

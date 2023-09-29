@@ -4,21 +4,31 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Button from "../Button";
 import TextField from "../TextField";
-import { Email } from "@styled-icons/material-outlined/Email";
-import { Password } from "@styled-icons/fluentui-system-regular/Password";
 import { Error } from "@styled-icons/boxicons-regular/Error";
-import { FieldErrors, signInValidate } from "../../utils/validator-form";
-import { useRouter } from "next/navigation";
+import { Identification } from "@styled-icons/heroicons-solid/Identification";
+import {
+  FieldErrors,
+  cpfValidate,
+  passwordValidate
+} from "../../utils/validator-form";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { api } from "../../lib/axios";
 import * as S from "./styles";
 
-const Form = () => {
+type FormProps = {
+  type: "login" | "password";
+};
+
+const Form = ({ type }: FormProps) => {
   const [formError, setFormError] = useState("");
   const [fieldError, setFieldError] = useState<FieldErrors>({});
-  const [values, setValues] = useState({ username: "", password: "" });
-  const [loading, setLoading] = useState(false);
+  const [values, setValues] = useState<any>();
+  const [loading, setLoading] = useState("false");
   const routes = useRouter();
+  const searchParams = useSearchParams();
   const { push } = routes;
+  const cpf = searchParams.get("cpf");
 
   const handleInput = (field: string, value: string) => {
     setValues((s) => ({ ...s, [field]: value }));
@@ -26,29 +36,57 @@ const Form = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setLoading(true);
+    setLoading("true");
 
-    const errors = signInValidate(values);
+    if (type === "password") {
+      const errorsPassword = passwordValidate(values);
 
-    if (Object.keys(errors).length) {
-      setFieldError(errors);
-      setLoading(false);
-      return;
+      if (Object.keys(errorsPassword).length) {
+        setFieldError(errorsPassword);
+        setLoading("false");
+        return;
+      }
+
+      const password = values.password;
+
+      const result = await signIn("credentials", {
+        cpf,
+        password,
+        redirect: false
+      });
+
+      if (result?.error) {
+        setFormError("Credenciais inválidas");
+        setLoading("false");
+      } else if (result?.ok) {
+        push("/dashboard");
+      }
+    } else {
+      const errorsCpf = cpfValidate(values);
+
+      if (Object.keys(errorsCpf).length) {
+        setFieldError(errorsCpf);
+        setLoading("false");
+        return;
+      }
+
+      await api
+        .post("/verification-cpf", { values })
+        .then((response) => {
+          if (response.data.status === 400) {
+            setLoading("false");
+            push(`/register-password?cpf=${values.cpf}`);
+          } else {
+            setLoading("false");
+            push(`/auth/password?cpf=${values.cpf}`);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
 
     setFieldError({});
-
-    const result = await signIn("credentials", {
-      ...values,
-      redirect: false
-    });
-
-    if (result?.error) {
-      setFormError("Credenciais inválidas");
-      setLoading(false);
-    } else if (result?.ok) {
-      push("/dashboard");
-    }
   };
 
   return (
@@ -60,38 +98,101 @@ const Form = () => {
             <S.TextError>{formError}</S.TextError>
           </S.AreaError>
         )}
-        <S.Title>Identifique-se no ecoletasocial.com.br:</S.Title>
-        <S.ContainerInput>
-          <TextField
-            error={fieldError?.username}
-            onInputChange={(v) => handleInput("username", v)}
-            label="Nome do usuário"
-            icon={<Email />}
-            name="username"
-            placeholder="jhonsmith"
-            type="text"
-          />
-          <TextField
-            error={fieldError?.password}
-            onInputChange={(v) => handleInput("password", v)}
-            label="Senha de acesso"
-            icon={<Password />}
-            name="password"
-            placeholder="••••••••••••••••"
-            type="password"
-          />
-          <S.ContainerButton>
-            <S.SizeButton>
-              <Button bg="blue" text="Continuar" fullWidth loading={loading} />
-            </S.SizeButton>
-          </S.ContainerButton>
-        </S.ContainerInput>
+        <S.Title>
+          {type === "login"
+            ? "Identifique-se no ecoleta.com.br"
+            : "Digite sua senha"}
+        </S.Title>
+        {type === "login" && (
+          <>
+            <S.ContainerInformation type={type}>
+              <S.ContainerLogo>
+                <Identification color="#1351B4" />
+              </S.ContainerLogo>
+              <S.Description>Número do CPF</S.Description>
+            </S.ContainerInformation>
+            <S.ContainerComplementInfo>
+              <S.TitleComplementInfo>
+                Digite seu CPF para <strong className="font-bold">criar</strong>{" "}
+                ou <strong className="font-bold">acessar</strong> sua conta
+                ecoletasocial.com.br
+              </S.TitleComplementInfo>
+            </S.ContainerComplementInfo>
+          </>
+        )}
+        {type === "password" && (
+          <S.ContainerInformation type={type}>
+            <S.Description>CPF</S.Description>
+            <S.CpfArea>{cpf}</S.CpfArea>
+          </S.ContainerInformation>
+        )}
+        {type === "login" ? (
+          <S.ContainerInput>
+            <TextField
+              error={fieldError?.cpf}
+              onInputChange={(v) => handleInput("cpf", v)}
+              label="CPF"
+              name="cpf"
+              placeholder="Digite seu CPF"
+              type="text"
+            />
+            <S.ContainerButton type={type}>
+              <S.SizeButton>
+                <Button
+                  bg="blue"
+                  text="Continuar"
+                  fullwidth="true"
+                  loading={loading}
+                />
+              </S.SizeButton>
+            </S.ContainerButton>
+          </S.ContainerInput>
+        ) : (
+          <S.ContainerInput>
+            <TextField
+              error={fieldError?.password}
+              onInputChange={(v) => handleInput("password", v)}
+              label="Senha"
+              name="password"
+              placeholder="Digite sua senha atual"
+              type="password"
+            />
+            <div className="mb-8 underline text-normal text-sky-700">
+              <Link href="#">Esqueci minha senha</Link>
+            </div>
+            <S.ContainerButton type={type}>
+              {type === "password" && (
+                <S.SizeButton>
+                  <Link href="/api/auth/signin">
+                    <Button
+                      bg="blue"
+                      border
+                      text="Cancelar"
+                      fullwidth="true"
+                      loading={loading}
+                    />
+                  </Link>
+                </S.SizeButton>
+              )}
+              <S.SizeButton>
+                <Button
+                  bg="blue"
+                  text="Entrar"
+                  fullwidth="true"
+                  loading={loading}
+                />
+              </S.SizeButton>
+            </S.ContainerButton>
+          </S.ContainerInput>
+        )}
       </S.Form>
-      <S.AreaLink>
-        <Link href="#">
-          <S.TextTerm>Termo de uso e aviso de privacidade</S.TextTerm>
-        </Link>
-      </S.AreaLink>
+      {type === "login" && (
+        <S.AreaLink>
+          <Link href="#">
+            <S.TextTerm>Termo de uso e aviso de privacidade</S.TextTerm>
+          </Link>
+        </S.AreaLink>
+      )}
     </S.Container>
   );
 };

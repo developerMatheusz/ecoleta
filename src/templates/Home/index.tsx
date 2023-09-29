@@ -1,10 +1,13 @@
 import React from "react";
-import Header from "@/components/Header";
+import Header from "../../components/Header";
+import { getUserSession } from "../../hooks/getUserSession";
 
-const HomeTemplate = () => {
+const HomeTemplate = async () => {
+  const userSession = await getUserSession();
+
   return (
     <div>
-      <Header typeHeader="normal" />
+      <Header typeheader="normal" userSession={userSession} />
     </div>
   );
 };

@@ -1,16 +1,12 @@
 import Joi from "joi";
 
 const fieldValidations = {
-  username: Joi.string()
-    .min(5)
+  cpf: Joi.string()
+    .min(11)
     .required()
-    .label("Nome de usuário")
-    .messages({ "string.min": "{{#label}} deve ter no mínimo 5 caracteres" }),
-  password: Joi.string()
-    .min(5)
-    .required()
-    .label("Senha de acesso")
-    .messages({ "string.min": "{{#label}} deve ter no mínimo 5 caracteres" })
+    .label("CPF")
+    .messages({ "string.min": "{{#label}} deve ter no mínimo 11 caracteres" }),
+  password: Joi.string().required().label("Senha")
 };
 
 export type FieldErrors = {
@@ -29,14 +25,26 @@ function getFieldErrors(obj: Joi.ValidationResult) {
   return errors;
 }
 
-type SignInValues = {
-  username: string;
+type CpfValues = {
+  cpf: string;
   password: string;
 };
 
-export function signInValidate(values: SignInValues) {
-  const { username, password } = fieldValidations;
-  const schema = Joi.object({ username, password });
+export function cpfValidate(value: CpfValues) {
+  const { cpf } = fieldValidations;
+  const schema = Joi.object({ cpf });
 
-  return getFieldErrors(schema.validate(values, { abortEarly: false }));
+  return getFieldErrors(schema.validate(value, { abortEarly: false }));
+}
+
+type PasswordValues = {
+  cpf: string;
+  password: string;
+};
+
+export function passwordValidate(value: PasswordValues) {
+  const { password } = fieldValidations;
+  const schema = Joi.object({ password });
+
+  return getFieldErrors(schema.validate(value, { abortEarly: false }));
 }

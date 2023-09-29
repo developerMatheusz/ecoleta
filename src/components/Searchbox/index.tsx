@@ -9,16 +9,16 @@ export type SearchboxProps = {
   onInputChange?: (value: string) => void;
   initialValue?: string;
 } & InputHTMLAttributes<HTMLInputElement> &
-  Pick<HeaderProps, "searchFieldPosition">;
+  Pick<HeaderProps, "searchfieldposition">;
 
 const Searchbox = ({
   onInputChange,
   initialValue,
   placeholder,
-  searchFieldPosition
+  searchfieldposition
 }: SearchboxProps) => {
   const [value, setValue] = useState(initialValue);
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState("false");
   const divRef = useRef<HTMLInputElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -30,13 +30,13 @@ const Searchbox = ({
   };
 
   const onBlur = () => {
-    setIsFocused(false);
+    setIsFocused("false");
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (divRef.current && !divRef.current.contains(event.target as Node)) {
-        setIsFocused(false);
+        setIsFocused("false");
       }
     };
 
@@ -53,12 +53,12 @@ const Searchbox = ({
   }, [isFocused]);
 
   return (
-    <S.Container searchFieldPosition={searchFieldPosition}>
+    <S.Container searchfieldposition={searchfieldposition}>
       <S.GroupItems
         ref={divRef}
-        isFocused={isFocused}
-        searchFieldPosition={searchFieldPosition}
-        onClick={() => setIsFocused(true)}
+        isfocused={isFocused}
+        searchfieldposition={searchfieldposition}
+        onClick={() => setIsFocused("true")}
       >
         <S.Input
           ref={inputRef}

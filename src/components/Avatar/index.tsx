@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { PersonFill } from "@styled-icons/bootstrap/PersonFill";
 import { FileDrop } from "react-file-drop";
 import { PulseLoader } from "react-spinners";
@@ -12,11 +12,12 @@ export type AvatarProps = {
 };
 
 const Avatar = ({ size }: AvatarProps) => {
-  const [isFileNearby, setIsFileNearby] = useState(false);
-  const [isFileOver, setIsFileOver] = useState(false);
+  const [isFileNearby, setIsFileNearby] = useState("false");
+  const [isFileOver, setIsFileOver] = useState("false");
   const [isUploading, setIsUploading] = useState(false);
   const sizePulseLoader =
     size === "small" ? 10 : size === "medium" ? 14 : size === "large" ? 20 : "";
+  const frameRef = useRef(null);
 
   function updateImage() {
     setIsUploading(true);
@@ -24,18 +25,19 @@ const Avatar = ({ size }: AvatarProps) => {
 
   return (
     <FileDrop
+      frame={frameRef.current!}
       onDrop={updateImage}
-      onDragOver={() => setIsFileOver(true)}
-      onDragLeave={() => setIsFileOver(false)}
-      onFrameDragEnter={() => setIsFileNearby(true)}
-      onFrameDragLeave={() => setIsFileNearby(false)}
+      onDragOver={() => setIsFileOver("true")}
+      onDragLeave={() => setIsFileOver("false")}
+      onFrameDragEnter={() => setIsFileNearby("true")}
+      onFrameDragLeave={() => setIsFileNearby("false")}
       onFrameDrop={() => {
-        setIsFileNearby(false);
-        setIsFileOver(false);
+        setIsFileNearby("false");
+        setIsFileOver("false");
       }}
     >
       <S.Container>
-        <S.ExtraItem isFileNearby={isFileNearby} isFileOver={isFileOver} />
+        <S.ExtraItem isfilenearby={isFileNearby} isfileover={isFileOver} />
         {isUploading && (
           <S.ContainerUpload
             style={{ backgroundColor: "rgba(48, 140, 216, 0.9)" }}

@@ -19,10 +19,10 @@ const Modal = ({ title, text }: ModalProps) => {
       </S.SectionContent>
       <S.GroupButtons>
         <S.ContainerButton>
-          <Button bg="blue" text="Label" fullWidth onlyBorder />
+          <Button bg="blue" text="Label" fullwidth="true" border />
         </S.ContainerButton>
         <S.ContainerButton>
-          <Button bg="blue" text="Label" fullWidth />
+          <Button bg="blue" text="Label" fullwidth="true" />
         </S.ContainerButton>
       </S.GroupButtons>
     </S.Container>

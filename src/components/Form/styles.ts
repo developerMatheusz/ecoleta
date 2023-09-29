@@ -15,15 +15,47 @@ export const TextError = tw.span`
 `;
 
 export const Title = tw.h1`
-  text-lg font-bold
+  text-xl font-bold
+`;
+
+type ContainerInformation = {
+  type: "login" | "password";
+};
+
+export const ContainerInformation = tw.div<ContainerInformation>`
+  mt-10 mb-4
+
+  ${(props) =>
+    props.type === "login" ? "flex items-center gap-4" : "flex flex-col"}
+`;
+
+export const CpfArea = tw.span`
+  font-bold text-lg
 `;
 
 export const ContainerInput = tw.div`
-  mt-8
+  mt-4
 `;
 
-export const ContainerButton = tw.div`
-  flex items-center justify-end
+export const ContainerLogo = tw.div`
+  w-6
+`;
+
+export const Description = tw.span`
+  text-lg
+`;
+
+export const ContainerComplementInfo = tw.div``;
+
+export const TitleComplementInfo = tw.span`
+  text-sm font-light
+`;
+
+export const ContainerButton = tw.div<ContainerInformation>`
+  ${(props) =>
+    props.type === "login"
+      ? "flex items-center justify-end"
+      : "flex items-center justify-end gap-4"}
 `;
 
 export const SizeButton = tw.div`

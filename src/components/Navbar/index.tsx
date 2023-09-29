@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import MenuWithAvatar from "../MenuWithAvatar";
 import Button from "../Button";
 import Link from "next/link";
@@ -12,10 +11,9 @@ import { EarDeaf } from "@styled-icons/fa-solid/EarDeaf";
 import { Contrast } from "@styled-icons/foundation/Contrast";
 import * as S from "./styles";
 
-const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
+const Navbar = ({ typeheader = "normal", userSession }: HeaderProps) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  const { status } = useSession();
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -25,6 +23,7 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 1000);
     };
+
     window.addEventListener("resize", handleResize);
     handleResize();
 
@@ -35,23 +34,23 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
 
   return (
     <>
-      {typeHeader === "normal" ? (
+      {typeheader === "normal" ? (
         <S.Navbar>
           <S.GroupItems>
             {isSmallScreen ? (
               <>
-                <S.ContainerBtnContrast typeHeader={typeHeader}>
+                <S.ContainerBtnContrast typeheader={typeheader}>
                   <Button
                     bg="white"
                     icon={<DottedMenu />}
-                    minimal
+                    minimal="true"
                     size="small"
                     toggleMenu={toggleMenu}
                   />
                   {menuVisible && (
                     <S.ContainerMenuSmall>
-                      <Link href="#">
-                        <S.AreaLink>Órgãos do Governo</S.AreaLink>
+                      <Link href="/dashboard">
+                        <S.AreaLink>Painel</S.AreaLink>
                       </Link>
                       <Link href="/map">
                         <S.AreaLink>Mapa</S.AreaLink>
@@ -68,14 +67,14 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
               </>
             ) : (
               <>
-                <Link href="#">
-                  <S.AreaLink>Órgãos do Governo</S.AreaLink>
+                <Link href="/dashboard">
+                  <S.AreaLink>Painel</S.AreaLink>
                 </Link>
                 <Link href="/map">
                   <S.AreaLink>Mapa</S.AreaLink>
                 </Link>
-                <Link href="#">
-                  <S.AreaLink>Legislação</S.AreaLink>
+                <Link href="/personal-registration">
+                  <S.AreaLink>Cadastre-se</S.AreaLink>
                 </Link>
                 <Link href="#">
                   <S.AreaLink>Acessibilidade</S.AreaLink>
@@ -83,11 +82,20 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
               </>
             )}
             <S.Divider />
-            <S.ContainerBtnContrast typeHeader={typeHeader}>
-              <Button bg="white" icon={<Contrast />} minimal size="small" />
+            <S.ContainerBtnContrast typeheader={typeheader}>
+              <Button
+                bg="white"
+                icon={<Contrast />}
+                minimal="true"
+                size="small"
+              />
             </S.ContainerBtnContrast>
             <S.ContainerBtnLogin>
-              {status === "unauthenticated" ? (
+              {!!userSession?.user?.name ? (
+                <div>
+                  <MenuWithAvatar userSession={userSession} />
+                </div>
+              ) : (
                 <Link href="/auth/login" target="_self">
                   <Button
                     bg="blue"
@@ -96,10 +104,6 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
                     text="Entrar"
                   />
                 </Link>
-              ) : (
-                <div>
-                  <MenuWithAvatar />
-                </div>
               )}
             </S.ContainerBtnLogin>
           </S.GroupItems>
@@ -111,7 +115,7 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
               <Button
                 bg="white"
                 icon={<Contrast size={20} />}
-                minimal
+                minimal="true"
                 size="small"
               />
               <S.Span>Alto contraste</S.Span>
@@ -120,7 +124,7 @@ const Navbar = ({ typeHeader = "normal" }: HeaderProps) => {
               <Button
                 bg="white"
                 icon={<EarDeaf size={16} />}
-                minimal
+                minimal="true"
                 size="small"
               />
               <S.Span>VLibras</S.Span>

@@ -15,20 +15,50 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
+export const WithLoading: Story = {
+  args: {
+    size: "medium",
+    bg: "white",
+    fullwidth: "false",
+    minimal: "false",
+    icon: <Profile />,
+    text: "Entrar",
+    disabled: false,
+    loading: "true",
+    border: false
+  },
+  argTypes: {
+    icon: {
+      type: "symbol"
+    },
+    loading: {
+      type: "symbol"
+    }
+  },
+  render: (args) => (
+    <div className="w-56">
+      <Button {...args} />
+    </div>
+  )
+};
+
 export const WithIcon: Story = {
   args: {
     size: "medium",
     bg: "white",
-    fullWidth: false,
-    minimal: false,
+    fullwidth: "false",
+    minimal: "false",
     icon: <Profile />,
     text: "Entrar",
     disabled: false,
-    loading: false,
-    onlyBorder: false
+    loading: "false",
+    border: false
   },
   argTypes: {
     icon: {
+      type: "symbol"
+    },
+    loading: {
       type: "symbol"
     }
   },
@@ -43,15 +73,18 @@ export const Default: Story = {
   args: {
     size: "medium",
     bg: "white",
-    fullWidth: false,
-    minimal: false,
+    fullwidth: "false",
+    minimal: "false",
     text: "Entrar",
     disabled: false,
-    loading: false,
-    onlyBorder: false
+    loading: "false",
+    border: false
   },
   argTypes: {
     icon: {
+      type: "symbol"
+    },
+    loading: {
       type: "symbol"
     }
   },

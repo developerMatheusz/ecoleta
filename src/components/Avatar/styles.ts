@@ -19,16 +19,18 @@ export const ContainerIcon = tw.div<Pick<AvatarProps, "size">>`
 `;
 
 type ExtraItemProps = {
-  isFileNearby: boolean;
-  isFileOver: boolean;
+  isfilenearby: string;
+  isfileover: string;
 };
 
 export const ExtraItem = tw.div<ExtraItemProps>`
   absolute inset-0
 
   ${(props) =>
-    (props.isFileNearby && !props.isFileOver && "bg-[#1351B4] opacity-40") ||
-    (props.isFileOver && "bg-[#1351B4] opacity-90")}
+    (props.isfilenearby === "true" &&
+      !props.isfileover &&
+      "bg-[#1351B4] opacity-40") ||
+    (props.isfileover === "true" && "bg-[#1351B4] opacity-90")}
 `;
 
 export const ContainerUpload = tw.div`

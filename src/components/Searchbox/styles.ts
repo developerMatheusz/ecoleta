@@ -1,21 +1,22 @@
 import tw from "tailwind-styled-components";
 import { SearchboxProps } from ".";
 
-export const Container = tw.div<Pick<SearchboxProps, "searchFieldPosition">>`
+export const Container = tw.div<Pick<SearchboxProps, "searchfieldposition">>`
   p-4 text-base rounded
   ${(props) =>
-    props.searchFieldPosition !== "right" ? "shadow-lg bg-gray-200/25" : "w-96"}
+    props.searchfieldposition !== "right" ? "shadow-lg bg-gray-200/25" : "w-96"}
 `;
 
 type GroupItemsProps = {
-  isFocused?: boolean;
-} & Pick<SearchboxProps, "searchFieldPosition">;
+  isfocused?: string;
+} & Pick<SearchboxProps, "searchfieldposition">;
 
 export const GroupItems = tw.div<GroupItemsProps>`
   flex items-center justify-between border border-gray-300 rounded
-  ${(props) => (props.isFocused ? "border-amber-500" : "border-gray-400")}
   ${(props) =>
-    props.searchFieldPosition === "right" ? "bg-gray-300" : "bg-white"}
+    props.isfocused === "true" ? "border-amber-500" : "border-gray-400"}
+  ${(props) =>
+    props.searchfieldposition === "right" ? "bg-gray-300" : "bg-white"}
 `;
 
 export const Input = tw.input`

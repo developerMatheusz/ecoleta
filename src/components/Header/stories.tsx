@@ -16,7 +16,7 @@ type Story = StoryObj<typeof Header>;
 
 export const Default: Story = {
   args: {
-    typeHeader: "normal"
+    typeheader: "normal"
   },
   render: (args) => <Header {...args} />
 };

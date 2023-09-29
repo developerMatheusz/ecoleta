@@ -17,9 +17,9 @@ export const ContainerBtnLogin = tw.div`
   ml-4
 `;
 
-export const ContainerBtnContrast = tw.div<Pick<HeaderProps, "typeHeader">>`
+export const ContainerBtnContrast = tw.div<Pick<HeaderProps, "typeheader">>`
   mx-1 flex items-center
-  ${(props) => props.typeHeader === "normal" && "flex-col"}
+  ${(props) => props.typeheader === "normal" && "flex-col"}
 `;
 
 export const Span = tw.span`

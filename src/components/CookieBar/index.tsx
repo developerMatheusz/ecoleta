@@ -18,7 +18,7 @@ const CookieBar = ({ text, loading = false }: CookieBarProps) => {
       </S.SectionText>
       <S.SectionButton>
         <Link href="/cookie-information">
-          <Button size="medium" text="Definir cookies" bg="blue" onlyBorder />
+          <Button size="medium" text="Definir cookies" bg="blue" border />
         </Link>
         <Button size="medium" text="Aceitar" bg="blue" />
       </S.SectionButton>
