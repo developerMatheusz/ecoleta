@@ -17,9 +17,14 @@ export const options: NextAuthOptions = {
           throw new Error("Credenciais inválidas");
         }
 
+        const cred = {
+          cpf: credentials?.cpf.replace(/[^\d]+/g, ""),
+          password: credentials?.password
+        };
+
         const res = await fetch(`${process.env.DJANGO_SERVER}/auth/login/`, {
           method: "POST",
-          body: JSON.stringify(credentials),
+          body: JSON.stringify(cred),
           headers: { "Content-Type": "application/json" }
         });
 

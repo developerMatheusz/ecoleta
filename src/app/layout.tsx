@@ -1,4 +1,5 @@
 import React from "react";
+import ToasterContext from "../context/ToasterContext";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import NextAuthSessionProvider from "./providers/NextAuthSessionProvider";
@@ -28,6 +29,7 @@ export default function RootLayout({
       </head>
       <body>
         <NextAuthSessionProvider>
+          <ToasterContext />
           <div>{children}</div>
         </NextAuthSessionProvider>
       </body>

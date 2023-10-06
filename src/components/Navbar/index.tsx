@@ -91,7 +91,7 @@ const Navbar = ({ typeheader = "normal", userSession }: HeaderProps) => {
               />
             </S.ContainerBtnContrast>
             <S.ContainerBtnLogin>
-              {!!userSession?.user?.name ? (
+              {userSession?.user?.name ? (
                 <div>
                   <MenuWithAvatar userSession={userSession} />
                 </div>

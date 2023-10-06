@@ -1,12 +1,15 @@
 import Joi from "joi";
 
 const fieldValidations = {
-  cpf: Joi.string()
-    .min(11)
+  cpf: Joi.string().min(14).label("CPF").required().messages({
+    "string.min": "O CPF deve ter no mínimo 11 caracteres.",
+    "any.required": "O CPF é obrigatório.",
+    "string.empty": "O CPF deve ter no mínimo 11 caracteres."
+  }),
+  password: Joi.string()
     .required()
-    .label("CPF")
-    .messages({ "string.min": "{{#label}} deve ter no mínimo 11 caracteres" }),
-  password: Joi.string().required().label("Senha")
+    .label("Senha")
+    .messages({ "any.required": "A senha é obrigatória." })
 };
 
 export type FieldErrors = {
@@ -27,7 +30,6 @@ function getFieldErrors(obj: Joi.ValidationResult) {
 
 type CpfValues = {
   cpf: string;
-  password: string;
 };
 
 export function cpfValidate(value: CpfValues) {
@@ -38,7 +40,6 @@ export function cpfValidate(value: CpfValues) {
 }
 
 type PasswordValues = {
-  cpf: string;
   password: string;
 };
 

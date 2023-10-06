@@ -33,6 +33,13 @@ const Searchbox = ({
     setIsFocused("false");
   };
 
+  const focusInput = () => {
+    setIsFocused("true");
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (divRef.current && !divRef.current.contains(event.target as Node)) {
@@ -47,10 +54,10 @@ const Searchbox = ({
   }, []);
 
   useEffect(() => {
-    if (isFocused && inputRef.current) {
+    if (isFocused && inputRef.current && initialValue) {
       inputRef.current.focus();
     }
-  }, [isFocused]);
+  }, [isFocused, initialValue]);
 
   return (
     <S.Container searchfieldposition={searchfieldposition}>
@@ -69,7 +76,7 @@ const Searchbox = ({
           type="text"
         />
         <S.SectionIcon>
-          <S.ContainerIcon>
+          <S.ContainerIcon onClick={focusInput}>
             <Search color="blue" />
           </S.ContainerIcon>
         </S.SectionIcon>

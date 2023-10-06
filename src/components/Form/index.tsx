@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -14,16 +15,17 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { api } from "../../lib/axios";
+import toast from "react-hot-toast";
 import * as S from "./styles";
 
 type FormProps = {
-  type: "login" | "password";
+  type?: "login" | "password";
 };
 
 const Form = ({ type }: FormProps) => {
   const [formError, setFormError] = useState("");
   const [fieldError, setFieldError] = useState<FieldErrors>({});
-  const [values, setValues] = useState<any>();
+  const [values, setValues] = useState<any>({});
   const [loading, setLoading] = useState("false");
   const routes = useRouter();
   const searchParams = useSearchParams();
@@ -31,7 +33,7 @@ const Form = ({ type }: FormProps) => {
   const cpf = searchParams.get("cpf");
 
   const handleInput = (field: string, value: string) => {
-    setValues((s) => ({ ...s, [field]: value }));
+    setValues((s: any) => ({ ...s, [field]: value }));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -56,9 +58,26 @@ const Form = ({ type }: FormProps) => {
       });
 
       if (result?.error) {
-        setFormError("Credenciais inválidas");
+        setFormError("Senha incorreta.");
         setLoading("false");
       } else if (result?.ok) {
+        toast.promise(
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const success = true;
+              if (success) {
+                resolve("Sua sessão foi iniciada com sucesso");
+              } else {
+                reject("Houve um erro no processo de autenticação");
+              }
+            }, 2000);
+          }),
+          {
+            loading: "Carregando...",
+            success: (result) => `${result}`,
+            error: (error) => `${error}`
+          }
+        );
         push("/dashboard");
       }
     } else {
@@ -76,6 +95,9 @@ const Form = ({ type }: FormProps) => {
           if (response.data.status === 400) {
             setLoading("false");
             push(`/register-password?cpf=${values.cpf}`);
+          } else if (response.data.status === 404) {
+            setLoading("false");
+            setFormError("Este CPF não existe.");
           } else {
             setLoading("false");
             push(`/auth/password?cpf=${values.cpf}`);
@@ -130,11 +152,12 @@ const Form = ({ type }: FormProps) => {
           <S.ContainerInput>
             <TextField
               error={fieldError?.cpf}
-              onInputChange={(v) => handleInput("cpf", v)}
+              onInputChange={(v: string) => handleInput("cpf", v)}
               label="CPF"
               name="cpf"
               placeholder="Digite seu CPF"
               type="text"
+              focus="true"
             />
             <S.ContainerButton type={type}>
               <S.SizeButton>
@@ -151,11 +174,12 @@ const Form = ({ type }: FormProps) => {
           <S.ContainerInput>
             <TextField
               error={fieldError?.password}
-              onInputChange={(v) => handleInput("password", v)}
+              onInputChange={(v: string) => handleInput("password", v)}
               label="Senha"
               name="password"
               placeholder="Digite sua senha atual"
               type="password"
+              focus="true"
             />
             <div className="mb-8 underline text-normal text-sky-700">
               <Link href="#">Esqueci minha senha</Link>
@@ -163,13 +187,13 @@ const Form = ({ type }: FormProps) => {
             <S.ContainerButton type={type}>
               {type === "password" && (
                 <S.SizeButton>
-                  <Link href="/api/auth/signin">
+                  <Link href="/auth/login">
                     <Button
                       bg="blue"
                       border
                       text="Cancelar"
                       fullwidth="true"
-                      loading={loading}
+                      type="button"
                     />
                   </Link>
                 </S.SizeButton>
@@ -180,6 +204,7 @@ const Form = ({ type }: FormProps) => {
                   text="Entrar"
                   fullwidth="true"
                   loading={loading}
+                  type="submit"
                 />
               </S.SizeButton>
             </S.ContainerButton>

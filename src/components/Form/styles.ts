@@ -19,7 +19,7 @@ export const Title = tw.h1`
 `;
 
 type ContainerInformation = {
-  type: "login" | "password";
+  type?: "login" | "password";
 };
 
 export const ContainerInformation = tw.div<ContainerInformation>`
@@ -30,7 +30,7 @@ export const ContainerInformation = tw.div<ContainerInformation>`
 `;
 
 export const CpfArea = tw.span`
-  font-bold text-lg
+  font-semibold text-lg
 `;
 
 export const ContainerInput = tw.div`

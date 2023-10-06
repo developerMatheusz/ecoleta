@@ -5,6 +5,7 @@ import { MessageProps } from "../Message";
 import Label from "../Label";
 import Icon from "../Icon";
 import { getTextFieldProperties } from "./utils";
+import { IMaskInput } from "react-imask";
 import * as S from "./styles";
 
 export type TextFieldProps = {
@@ -14,6 +15,7 @@ export type TextFieldProps = {
   disabled?: boolean;
   icon?: React.ReactNode;
   error?: string;
+  focus?: string;
 } & InputHTMLAttributes<HTMLInputElement> &
   Pick<MessageProps, "typeMessage">;
 
@@ -27,7 +29,8 @@ const TextField = ({
   placeholder,
   typeMessage,
   type,
-  error
+  error,
+  focus
 }: TextFieldProps) => {
   const [value, setValue] = useState(initialValue);
   const { tagMessage, disabled: isDisabledMessage } = getTextFieldProperties(
@@ -49,14 +52,30 @@ const TextField = ({
         {!!label && <Label name={name} disabled={isDisabled} label={label} />}
         <S.ContainerInput typeMessage={typeMessage} isDisabled={isDisabled}>
           {!!icon && <Icon disabled={isDisabled} icon={icon} />}
-          <S.Input
-            onChange={onChange}
-            value={value}
-            disabled={isDisabled}
-            {...(label ? { id: name } : {})}
-            placeholder={placeholder}
-            type={type}
-          />
+          {label === "CPF" ? (
+            <IMaskInput
+              mask="000.000.000-00"
+              placeholder={placeholder}
+              onChange={onChange}
+              value={value}
+              {...(label ? { id: name } : {})}
+              type={type}
+              className={`italic-placeholder bg-transparent text-base text-black focus:outline-none ml-2 resize-none w-full ${
+                isDisabled && "opacity-50 cursor-not-allowed"
+              }`}
+              autoFocus={focus === "true" ? true : false}
+            />
+          ) : (
+            <S.Input
+              onChange={onChange}
+              value={value}
+              disabled={isDisabled}
+              {...(label ? { id: name } : {})}
+              placeholder={placeholder}
+              type={type}
+              autoFocus={focus === "true" ? true : false}
+            />
+          )}
         </S.ContainerInput>
         {!!error && <span className="text-red-500 py-2">{error}</span>}
       </S.Section>

@@ -1,5 +1,6 @@
 import React from "react";
+import ForgotPasswordTemplate from "../../templates/ForgotPassword";
 
 export default function RegisterPassword() {
-  return <div>Cadastrar senha</div>;
+  return <ForgotPasswordTemplate />;
 }

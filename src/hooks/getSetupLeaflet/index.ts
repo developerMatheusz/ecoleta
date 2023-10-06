@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import L from "leaflet";
 import "leaflet.zoomhome";
 

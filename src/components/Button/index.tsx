@@ -21,6 +21,7 @@ export type ButtonProps = {
   loading?: string;
   border?: boolean;
   toggleMenu?: () => void;
+  type?: string;
 } & ButtonTypes;
 
 const Button = ({
@@ -33,10 +34,12 @@ const Button = ({
   disabled = false,
   loading = "false",
   border,
-  toggleMenu
+  toggleMenu,
+  type
 }: ButtonProps) => {
   return (
     <S.Button
+      type={type}
       loading={loading}
       border={border}
       fullwidth={fullwidth}
